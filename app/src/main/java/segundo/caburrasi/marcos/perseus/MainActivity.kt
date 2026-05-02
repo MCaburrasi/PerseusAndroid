@@ -26,7 +26,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val adaptativeInfo = currentWindowAdaptiveInfo()
             val width = calculateWindowSizeClass(this).widthSizeClass
 
             PerseusTheme {
@@ -34,7 +33,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     topBar = { TitleBar() }
                 ) { innerPadding ->
-                    NavBar(Modifier.padding(innerPadding), adaptativeInfo, width)
+                    NavBar(Modifier.padding(innerPadding), width)
                 }
             }
         }
