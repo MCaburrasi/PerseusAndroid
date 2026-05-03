@@ -11,8 +11,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import segundo.caburrasi.marcos.perseus.ui.NavBar
+import segundo.caburrasi.marcos.perseus.ui.PerseusViewModel
 import segundo.caburrasi.marcos.perseus.ui.TitleBar
 import segundo.caburrasi.marcos.perseus.ui.theme.PerseusTheme
 
@@ -24,18 +26,18 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val width = calculateWindowSizeClass(this).widthSizeClass
-            val policy = ThreadPolicy.Builder()
-                .permitAll().build()
+            val policy = ThreadPolicy.Builder().permitAll().build()
+
             StrictMode.setThreadPolicy(policy)
-            val client = Client("192.168.0.13", 3621)
-            client.run()
+            val viewModel = PerseusViewModel()
+            viewModel.uiState.collectAsState().value.client.run()
 
             PerseusTheme {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     topBar = { TitleBar() }
                 ) { innerPadding ->
-                    NavBar(Modifier.padding(innerPadding), width)
+                    NavBar(Modifier.padding(innerPadding), width, viewModel)
                 }
             }
         }

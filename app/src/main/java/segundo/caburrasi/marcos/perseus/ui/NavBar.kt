@@ -31,7 +31,8 @@ import segundo.caburrasi.marcos.perseus.ui.navigation.NavigationScreens
 @Composable
 fun NavBar(
     modifier: Modifier = Modifier,
-    width: WindowWidthSizeClass
+    width: WindowWidthSizeClass,
+    viewModel: PerseusViewModel
 ){
 
     val customNavSuiteType: NavigationSuiteType = when (width) {
@@ -74,7 +75,7 @@ fun NavBar(
         when (currentDestination){
             NavigationScreens.HOME -> HomeScreen()
             NavigationScreens.TOOLS -> ToolScreen()
-            NavigationScreens.CREATE -> NewPostScreen()
+            NavigationScreens.CREATE -> NewPostScreen(Modifier, viewModel)
             NavigationScreens.PROFILE -> ProfileScreen()
         }
     }

@@ -18,20 +18,17 @@ class Client(address: String, port: Int) {
 
     fun run(){
         thread { read() }
-        while (connected){
-            val input = readlnOrNull() ?: ""
-            if ("exit" in input){
-                connected = false
-                reader.close()
-                connection.close()
-            } else if (input != ""){
-                write(input)
-            }
-        }
     }
 
-    private fun write(message: String){
-        writer.write((message + '\n').toByteArray())
+    fun write(message: String){
+        if ("exit" in message){
+            connected = false
+            reader.close()
+            connection.close()
+        } else if (message != ""){
+            writer.write((message + '\n').toByteArray())
+        }
+
     }
     private fun read(){
         while (connected){
