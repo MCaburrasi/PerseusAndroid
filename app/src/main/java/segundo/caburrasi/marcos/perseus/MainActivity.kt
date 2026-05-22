@@ -32,6 +32,9 @@ class MainActivity : ComponentActivity() {
             val viewModel = PerseusViewModel()
             viewModel.uiState.collectAsState().value.client.run()
 
+            /*val posts = viewModel.uiState.collectAsState().value.client.write("Load|Post")
+            viewModel.setPostsList(posts)*/
+
             PerseusTheme {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),

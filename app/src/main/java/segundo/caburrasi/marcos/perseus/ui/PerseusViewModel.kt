@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import segundo.caburrasi.marcos.perseus.data.Post
 
 class PerseusViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(UiState())
@@ -15,10 +16,41 @@ class PerseusViewModel : ViewModel() {
         uiState.value.client.write(text)
     }
 
-    fun setNewPostText(text: String){
+    fun setPostsList(posts: String){
+        val l: List<String> = posts.split(", ")
+        var finalPosts: List<Post> = listOf()
+        for (s in l){
+            finalPosts += parsePost(s)
+        }
+
         _uiState.update { currentState ->
             currentState.copy(
-                newPostText = mutableStateOf(text)
+                posts = finalPosts
+            )
+        }
+    }
+
+    fun parsePost(s: String): Post{
+        val l: List<String> = s.split("|")
+        var image = l[2]
+        if (image == "null") image = ""
+        return Post(l[0].toInt(), l[1], image)
+    }
+
+    fun setShowCreateAccount(b: Boolean){
+        _uiState.update { currentState ->
+            currentState.copy(
+                showCreateAccount = b,
+                showNoAccount = false
+            )
+        }
+    }
+
+    fun setShowLogIn(b: Boolean){
+        _uiState.update { currentState ->
+            currentState.copy(
+                showLogIn = b,
+                showNoAccount = false
             )
         }
     }

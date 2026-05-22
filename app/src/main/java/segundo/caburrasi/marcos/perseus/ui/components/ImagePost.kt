@@ -38,10 +38,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import segundo.caburrasi.marcos.perseus.R
+import segundo.caburrasi.marcos.perseus.data.Post
 
 @Composable
 fun ImagePost(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    post: Post
 ){
     Box(modifier
         .clip(RoundedCornerShape(corner = CornerSize(12.dp))) /*TODO*/
@@ -91,15 +93,19 @@ fun ImagePost(
 
             Spacer(Modifier.size(12.dp))
 
-            Image(
-                painter = painterResource(R.drawable.ic_launcher_background),
-                contentDescription = "",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(ratio = 1f)
-            ) /*TODO*/
+            if (post.image != ""){
+                Image(
+                    painter = painterResource(R.drawable.ic_launcher_background),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(ratio = 1f)
+                ) /*TODO*/
+            }
 
             Spacer(Modifier.size(12.dp))
+
+            Text(text = post.text)
 
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -123,10 +129,10 @@ fun ImagePost(
     }
 }
 
-@Composable
+/*@Composable
 @Preview
 fun ImagePostPreview(
 
 ){
     ImagePost()
-}
+}*/

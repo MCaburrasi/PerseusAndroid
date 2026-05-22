@@ -73,10 +73,10 @@ fun NavBar(
         modifier = modifier
     ){
         when (currentDestination){
-            NavigationScreens.HOME -> HomeScreen()
+            NavigationScreens.HOME -> HomeScreen(viewModel)
             NavigationScreens.TOOLS -> ToolScreen()
-            NavigationScreens.CREATE -> NewPostScreen(Modifier, viewModel)
-            NavigationScreens.PROFILE -> ProfileScreen()
+            NavigationScreens.CREATE -> CreatePostOrEvent(Modifier, viewModel)
+            NavigationScreens.PROFILE -> ProfileScreen(viewModel)
         }
     }
 }

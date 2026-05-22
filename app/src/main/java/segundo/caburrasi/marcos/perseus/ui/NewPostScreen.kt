@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -23,13 +24,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import segundo.caburrasi.marcos.perseus.R
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 
 @Composable
 fun NewPostScreen(
     modifier: Modifier = Modifier,
     viewModel: PerseusViewModel
 ){
-    Column (modifier = modifier) {
+    var localText by remember { mutableStateOf(viewModel.uiState.value.newPostText.value) }
+
+    Column (modifier = modifier.fillMaxSize()) {
         Row (
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
@@ -43,8 +50,8 @@ fun NewPostScreen(
             )
 
             TextField(
-                value = viewModel.uiState.collectAsState().value.newPostText.value,
-                onValueChange = {newText -> viewModel.setNewPostText(viewModel.uiState.value.newPostText.value + newText)},
+                value = localText,
+                onValueChange = {newText -> localText = newText},
                 modifier = Modifier.fillMaxWidth()
             )
         }
@@ -81,7 +88,10 @@ fun NewPostScreen(
         Spacer(Modifier.size(88.dp))
 
         Button(
-            onClick = {viewModel.sendPost(viewModel.uiState.value.newPostText.value, "null")},
+            onClick = {
+                viewModel.sendPost("Add|Post|" + localText, "null")
+                localText = ""
+                      },
             Modifier
                 .align(Alignment.CenterHorizontally)
         ) {

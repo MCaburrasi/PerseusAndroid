@@ -1,6 +1,7 @@
 package segundo.caburrasi.marcos.perseus.ui
 
-import android.annotation.SuppressLint
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.SecondaryTabRow
 import androidx.compose.material3.Tab
@@ -9,13 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import segundo.caburrasi.marcos.perseus.ui.navigation.CreatePostTab
 import segundo.caburrasi.marcos.perseus.ui.navigation.TabScreens
 
-/* https://www.jetpackcompose.pro/tabs/tab/ */
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun HomeScreen(
+fun CreatePostOrEvent(
+    modifier: Modifier = Modifier,
     viewModel: PerseusViewModel
 ){
     val selectedTab = remember { mutableIntStateOf(0) }
@@ -26,7 +27,7 @@ fun HomeScreen(
         SecondaryTabRow(
             selectedTabIndex = selectedTab.intValue
         ) {
-            TabScreens.entries.forEachIndexed { index, screens ->
+            CreatePostTab.entries.forEachIndexed { index, screens ->
                 Tab(
                     selected = selectedTab.intValue == index,
                     onClick = { selectedTab.intValue = index },
@@ -36,16 +37,8 @@ fun HomeScreen(
         }
 
         when (selectedTab.intValue){
-            0 -> MainPostScreen(Modifier, viewModel)
-            1 -> EventScreen()
-            2 -> ArticleScreen()
+            0 -> NewPostScreen(Modifier, viewModel)
+            1 -> NewEventScreen(Modifier, viewModel)
         }
     }
-
 }
-
-/*@Preview
-@Composable
-fun HomeScreenPreview(){
-    HomeScreen()
-}*/
