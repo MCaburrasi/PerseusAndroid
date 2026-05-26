@@ -1,6 +1,8 @@
 package segundo.caburrasi.marcos.perseus.ui
 
 import android.annotation.SuppressLint
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Icon
@@ -28,6 +30,7 @@ import androidx.window.core.layout.WindowSizeClass
 import segundo.caburrasi.marcos.perseus.ui.navigation.NavigationScreens
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavBar(
     modifier: Modifier = Modifier,

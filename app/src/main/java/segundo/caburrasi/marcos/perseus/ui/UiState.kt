@@ -4,11 +4,13 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import segundo.caburrasi.marcos.perseus.Client
+import segundo.caburrasi.marcos.perseus.data.ConfigUtils
 import segundo.caburrasi.marcos.perseus.data.Post
+import java.util.Properties
 
 data class UiState (
     var newPostText: MutableState<String> = mutableStateOf(""),
-    val client: Client = Client("192.168.0.13", 3621),
+    val client: Client = Client(ConfigUtils.getProperty("ip"), ConfigUtils.getProperty("port").toInt()),
     var posts: List<Post> = mutableListOf(),
     var newEventName: String = "",
     var newEventDesc: String = "",
@@ -17,5 +19,6 @@ data class UiState (
     var passwordText: MutableState<String> = mutableStateOf(""),
     var showCreateAccount: Boolean = false,
     var showLogIn: Boolean = false,
-    var showNoAccount: Boolean = true
+    var showNoAccount: Boolean = true,
+    var properties: Properties = Properties()
     )

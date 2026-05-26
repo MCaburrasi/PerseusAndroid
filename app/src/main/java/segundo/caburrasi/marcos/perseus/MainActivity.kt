@@ -13,10 +13,12 @@ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSiz
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import segundo.caburrasi.marcos.perseus.data.ConfigUtils
 import segundo.caburrasi.marcos.perseus.ui.NavBar
 import segundo.caburrasi.marcos.perseus.ui.PerseusViewModel
 import segundo.caburrasi.marcos.perseus.ui.TitleBar
 import segundo.caburrasi.marcos.perseus.ui.theme.PerseusTheme
+import java.util.Properties
 
 
 class MainActivity : ComponentActivity() {
@@ -28,9 +30,11 @@ class MainActivity : ComponentActivity() {
             val width = calculateWindowSizeClass(this).widthSizeClass
             val policy = ThreadPolicy.Builder().permitAll().build()
 
+            ConfigUtils.init(applicationContext)
+
             StrictMode.setThreadPolicy(policy)
             val viewModel = PerseusViewModel()
-            viewModel.uiState.collectAsState().value.client.run()
+            viewModel.connectToServer()
 
             /*val posts = viewModel.uiState.collectAsState().value.client.write("Load|Post")
             viewModel.setPostsList(posts)*/

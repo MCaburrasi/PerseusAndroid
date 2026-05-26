@@ -38,7 +38,7 @@ fun HomeScreen(
         when (selectedTab.intValue){
             0 -> MainPostScreen(Modifier, viewModel)
             1 -> EventScreen()
-            2 -> ArticleScreen()
+            2 -> ArticleScreen(viewModel = viewModel)
         }
     }
 

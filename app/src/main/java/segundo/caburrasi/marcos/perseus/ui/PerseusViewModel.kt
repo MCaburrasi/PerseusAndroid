@@ -1,11 +1,14 @@
 package segundo.caburrasi.marcos.perseus.ui
 
+import androidx.annotation.Nullable
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import segundo.caburrasi.marcos.perseus.Client
+import segundo.caburrasi.marcos.perseus.data.ConfigUtils
 import segundo.caburrasi.marcos.perseus.data.Post
 
 class PerseusViewModel : ViewModel() {
@@ -53,5 +56,19 @@ class PerseusViewModel : ViewModel() {
                 showNoAccount = false
             )
         }
+    }
+
+    fun clientWrite(s: String): String{
+        return uiState.value.client.write(s)
+    }
+
+    fun connectToServer(){
+        _uiState.update { currentState ->
+            currentState.copy(
+                client = Client(ConfigUtils.getProperty("ip"), ConfigUtils.getProperty("port").toInt())
+            )
+        }
+
+        uiState.value.client.run()
     }
 }
