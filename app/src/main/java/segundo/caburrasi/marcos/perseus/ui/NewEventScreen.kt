@@ -80,16 +80,18 @@ fun NewEventScreen(
         ){
             TextField(
                 value = localNameText,
-                onValueChange = {newDescText -> localNameText = newDescText},
+                placeholder = { Text("Name") },
+                onValueChange = {newText -> localNameText = newText},
                 modifier = Modifier
                     .fillMaxWidth(0.95f)
-                    .align(Alignment.CenterHorizontally)
+                    .align(Alignment.CenterHorizontally),
             )
 
             Spacer(Modifier.size(18.dp))
 
             TextField(
                 value = localDescText,
+                placeholder = { Text("Description") },
                 onValueChange = {newText -> localDescText = newText},
                 modifier = Modifier
                     .fillMaxWidth(0.95f)
@@ -100,6 +102,7 @@ fun NewEventScreen(
 
             TextField(
                 value = localPlaceText,
+                placeholder = { Text("Place") },
                 onValueChange = {newText -> localPlaceText = newText},
                 modifier = Modifier
                     .fillMaxWidth(0.95f)
@@ -108,7 +111,7 @@ fun NewEventScreen(
 
             Spacer(Modifier.size(18.dp))
 
-            Image(
+            /*Image(
                 painter = painterResource(R.drawable.ic_launcher_background),
                 contentDescription = stringResource(R.string.app_name),
                 contentScale = ContentScale.Crop,
@@ -116,7 +119,7 @@ fun NewEventScreen(
                     .fillMaxWidth(0.95f)
                     .aspectRatio(16f / 9f)
                     .clip(RoundedCornerShape(corner = CornerSize(8.dp)))
-            )
+            )*/
 
             Spacer(Modifier.size(18.dp))
 
@@ -143,7 +146,7 @@ fun NewEventScreen(
 
             Button(
                 onClick = {
-                    viewModel.uiState.value.client.write("Add|Event|$localNameText|$localDescText|$localStart|$localEnd|$localPlaceText|null")
+                    viewModel.uiState.value.client?.write("Add|Event|$localNameText|$localDescText|$localStart|$localEnd|$localPlaceText|null")
                 },
                 Modifier
                     .align(Alignment.CenterHorizontally)
@@ -172,8 +175,8 @@ fun PerseusDatePicker(
     } ?: ""
 
     val date = selectedDate.split("/")
-    if (isStart) localStartDate = LocalDate.of(date[2].toInt(), date[1].toInt(), date[0].toInt())
-    else localEndDate = LocalDate.of(date[2].toInt(), date[1].toInt(), date[0].toInt())
+    if (isStart) localStartDate = LocalDate.of(date[2].toInt(), date[0].toInt(), date[1].toInt())
+    else localEndDate = LocalDate.of(date[2].toInt(), date[0].toInt(), date[1].toInt())
 
     TextField(
         value = date[1] + "/" + date[0] + "/" + date[2],
@@ -219,8 +222,9 @@ fun PerseusTimePicker(
     isStart: Boolean
 ){
     val currentTime = Calendar.getInstance()
-    val hour = currentTime.get(Calendar.HOUR_OF_DAY)
-    val minute = currentTime.get(Calendar.MINUTE)
+    var hour by remember { mutableStateOf(currentTime.get(Calendar.HOUR_OF_DAY)) }
+    var minute by remember { mutableStateOf(currentTime.get(Calendar.MINUTE)) }
+
     if (isStart) localStartTime = LocalTime.of(hour, minute, 0)
     else localEndTime = LocalTime.of(hour, minute, 0)
 
@@ -232,7 +236,11 @@ fun PerseusTimePicker(
 
     TextField(
         value = "$hour:$minute",
-        onValueChange = {},
+        onValueChange = {
+            newValue ->
+            hour = newValue.split(":")[0].toInt()
+            minute = newValue.split(":")[1].toInt()
+        },
         modifier = Modifier.fillMaxWidth(),
         label = { Text(text) },
         placeholder = { Text("MM/DD/YYYY") },

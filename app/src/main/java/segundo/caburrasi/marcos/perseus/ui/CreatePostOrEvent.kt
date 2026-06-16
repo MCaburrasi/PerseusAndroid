@@ -7,6 +7,7 @@ import androidx.compose.material3.SecondaryTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -19,6 +20,10 @@ fun CreatePostOrEvent(
     modifier: Modifier = Modifier,
     viewModel: PerseusViewModel
 ){
+    if (!viewModel.uiState.collectAsState().value.loggedIn){
+        CreateAccountPopup(viewModel)
+    }
+
     val selectedTab = remember { mutableIntStateOf(0) }
 
     Column(

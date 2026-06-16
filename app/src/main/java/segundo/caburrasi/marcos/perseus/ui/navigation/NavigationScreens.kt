@@ -14,7 +14,5 @@ enum class NavigationScreens (
     @StringRes val label: Int,
 ) {
     HOME(icon = Icons.Rounded.Home, label = R.string.app_name),
-    TOOLS(icon = Icons.Rounded.Build, label = R.string.app_name),
-    CREATE(icon = Icons.Rounded.Add, label = R.string.app_name),
-    PROFILE(icon = Icons.Rounded.Person, label = R.string.app_name)
+    CREATE(icon = Icons.Rounded.Add, label = R.string.app_name)
 }

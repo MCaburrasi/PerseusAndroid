@@ -77,9 +77,7 @@ fun NavBar(
     ){
         when (currentDestination){
             NavigationScreens.HOME -> HomeScreen(viewModel)
-            NavigationScreens.TOOLS -> ToolScreen()
             NavigationScreens.CREATE -> CreatePostOrEvent(Modifier, viewModel)
-            NavigationScreens.PROFILE -> ProfileScreen(viewModel)
         }
     }
 }

@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import segundo.caburrasi.marcos.perseus.data.ConfigUtils
 import segundo.caburrasi.marcos.perseus.ui.NavBar
 import segundo.caburrasi.marcos.perseus.ui.PerseusViewModel
+import segundo.caburrasi.marcos.perseus.ui.ServerConnectionScreen
 import segundo.caburrasi.marcos.perseus.ui.TitleBar
 import segundo.caburrasi.marcos.perseus.ui.theme.PerseusTheme
 import java.util.Properties
@@ -31,20 +32,21 @@ class MainActivity : ComponentActivity() {
             val policy = ThreadPolicy.Builder().permitAll().build()
 
             ConfigUtils.init(applicationContext)
-
             StrictMode.setThreadPolicy(policy)
+
             val viewModel = PerseusViewModel()
-            viewModel.connectToServer()
 
             /*val posts = viewModel.uiState.collectAsState().value.client.write("Load|Post")
             viewModel.setPostsList(posts)*/
+
+            println("")
 
             PerseusTheme {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     topBar = { TitleBar() }
                 ) { innerPadding ->
-                    NavBar(Modifier.padding(innerPadding), width, viewModel)
+                    ServerConnectionScreen(Modifier.padding(innerPadding), width, viewModel)
                 }
             }
         }

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.Button
@@ -28,6 +29,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.Popup
 
 @Composable
@@ -37,8 +39,8 @@ fun CreateAccountPopup(
     var userText by remember { mutableStateOf(viewModel.uiState.value.usernameText.value) }
     var passText by remember { mutableStateOf(viewModel.uiState.value.passwordText.value) }
 
-    Popup(
-        alignment = Alignment.Center
+    Dialog (
+        onDismissRequest = {}
     ) {
         Column(
             Modifier
@@ -58,7 +60,9 @@ fun CreateAccountPopup(
 
             TextField(
                 value = passText,
+
                 onValueChange = { newText -> passText = newText },
+
                 modifier = Modifier
                     .fillMaxWidth(0.85f)
                     .align(Alignment.CenterHorizontally)
@@ -70,13 +74,17 @@ fun CreateAccountPopup(
                 Modifier
                     .align(Alignment.CenterHorizontally)
             ) {
-                Button(onClick = {}) {
+                Button(onClick = {
+                    viewModel.registerUser(userText, passText)
+                }) {
                     Text("Create Account")
                 }
 
                 Spacer(Modifier.size(12.dp))
 
-                Button(onClick = {}) {
+                Button(onClick = {
+                    viewModel.logIn(userText, passText)
+                }) {
                     Text("Log In")
                 }
             }
